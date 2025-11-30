@@ -1,0 +1,27 @@
+{
+    "analysis_date": "2025-12-01 01:15:17",
+    "training_data": "..\\data\\processed\\merged_train_data.csv",
+    "test_data": "..\\data\\raw\\railway-delay-dataset.csv",
+    "total_samples_trained": 100000,
+    "total_samples_tested": 25000,
+    "total_features": 5095,
+    "models_trained": 2,
+    "best_model": "Decision Tree",
+    "best_f1_score": 1.0,
+    "best_accuracy": 1.0,
+    "best_balanced_accuracy": 1.0,
+    "avg_f1_score": 0.867186778690795,
+    "avg_accuracy": 0.9424600000000001,
+    "top_3_models": [
+        {
+            "name": "Decision Tree",
+            "f1_score": 1.0,
+            "accuracy": 1.0
+        },
+        {
+            "name": "Random Forest",
+            "f1_score": 0.7343735573815898,
+            "accuracy": 0.88492
+        }
+    ]
+}
