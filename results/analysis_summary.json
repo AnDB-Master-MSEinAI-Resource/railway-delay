@@ -1,17 +1,17 @@
 {
-    "analysis_date": "2025-12-01 02:31:54",
-    "training_data": "..\\data\\processed\\merged_train_data.csv",
-    "test_data": "..\\data\\raw\\railway-delay-dataset.csv",
+    "analysis_date": "2025-12-01 03:14:46",
+    "training_data": "D:\\MSE\\5. Data Mining\\railway-delay\\data\\processed\\merged_train_data.csv",
+    "test_data": "D:\\MSE\\5. Data Mining\\railway-delay\\data\\raw\\railway-delay-dataset.csv",
     "total_samples_trained": 100000,
     "total_samples_tested": 25000,
-    "total_features": 5095,
-    "models_trained": 2,
+    "total_features": 49,
+    "models_trained": 4,
     "best_model": "Decision Tree",
     "best_f1_score": 1.0,
     "best_accuracy": 1.0,
     "best_balanced_accuracy": 1.0,
-    "avg_f1_score": 0.8696346222064562,
-    "avg_accuracy": 0.9412,
+    "avg_f1_score": 0.9788032454361055,
+    "avg_accuracy": 0.98955,
     "top_3_models": [
         {
             "name": "Decision Tree",
@@ -20,8 +20,13 @@
         },
         {
             "name": "Random Forest",
-            "f1_score": 0.7392692444129124,
-            "accuracy": 0.8824
+            "f1_score": 1.0,
+            "accuracy": 1.0
+        },
+        {
+            "name": "Gradient Boosting",
+            "f1_score": 1.0,
+            "accuracy": 1.0
         }
     ]
 }

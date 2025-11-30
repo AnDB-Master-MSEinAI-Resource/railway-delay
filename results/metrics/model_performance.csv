@@ -1,0 +1,5 @@
+model_name,Accuracy,Precision,Recall,F1-Score,Balanced_Accuracy,Cohen_Kappa,MCC,Training_Time
+Logistic Regression,0.9565,0.9901,0.8466,0.9128,0.9218,0.884,0.8888,0.6651
+Decision Tree,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.1521
+Random Forest,1.0,0.9999,1.0,0.9999,1.0,0.9999,0.9999,0.5278
+Gradient Boosting,1.0,1.0,1.0,1.0,1.0,1.0,1.0,6.9089
