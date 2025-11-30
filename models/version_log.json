@@ -1,0 +1,80 @@
+{
+    "models": [
+        {
+            "version": "v20251201_001634",
+            "timestamp": "2025-12-01T00:16:34.798609",
+            "model_name": "Decision_Tree",
+            "model_type": "DecisionTreeClassifier",
+            "model_path": "../models\\Decision_Tree_v20251201_001634.pkl",
+            "metrics": {
+                "accuracy": 1.0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1_score": 1.0,
+                "balanced_accuracy": 1.0,
+                "cohen_kappa": 1.0,
+                "matthews_corr": 1.0,
+                "g_mean": 1.0,
+                "roc_auc": 1.0
+            },
+            "parameters": {
+                "ccp_alpha": 0.0,
+                "class_weight": null,
+                "criterion": "gini",
+                "max_depth": 8,
+                "max_features": null,
+                "max_leaf_nodes": null,
+                "min_impurity_decrease": 0.0,
+                "min_samples_leaf": 1,
+                "min_samples_split": 2,
+                "min_weight_fraction_leaf": 0.0,
+                "monotonic_cst": null,
+                "random_state": 42,
+                "splitter": "best"
+            },
+            "notes": "Railway delay prediction model - Decision Tree",
+            "file_size_mb": 0.09243106842041016
+        },
+        {
+            "version": "v20251201_001634",
+            "timestamp": "2025-12-01T00:16:34.809406",
+            "model_name": "Random_Forest",
+            "model_type": "RandomForestClassifier",
+            "model_path": "../models\\Random_Forest_v20251201_001634.pkl",
+            "metrics": {
+                "accuracy": 0.87692,
+                "precision": 0.9025480554313813,
+                "recall": 0.6045815241802666,
+                "f1_score": 0.72411010490451,
+                "balanced_accuracy": 0.7903918482753851,
+                "cohen_kappa": 0.6488425970687621,
+                "matthews_corr": 0.6704163133448667,
+                "g_mean": 0.7682407157134061,
+                "roc_auc": 0.9749125449178231
+            },
+            "parameters": {
+                "bootstrap": true,
+                "ccp_alpha": 0.0,
+                "class_weight": null,
+                "criterion": "gini",
+                "max_depth": 8,
+                "max_features": "sqrt",
+                "max_leaf_nodes": null,
+                "max_samples": null,
+                "min_impurity_decrease": 0.0,
+                "min_samples_leaf": 1,
+                "min_samples_split": 2,
+                "min_weight_fraction_leaf": 0.0,
+                "monotonic_cst": null,
+                "n_estimators": 30,
+                "n_jobs": -1,
+                "oob_score": false,
+                "random_state": 42,
+                "verbose": 0,
+                "warm_start": false
+            },
+            "notes": "Railway delay prediction model - Random Forest",
+            "file_size_mb": 0.33829593658447266
+        }
+    ]
+}
