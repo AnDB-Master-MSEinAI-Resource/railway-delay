@@ -1,0 +1,35 @@
+{
+    "version": "v20251201_034545",
+    "timestamp": "2025-12-01T03:45:45.421806",
+    "model_name": "Decision_Tree",
+    "model_type": "DecisionTreeClassifier",
+    "model_path": "../models\\Decision_Tree_v20251201_034545.pkl",
+    "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "balanced_accuracy": 1.0,
+        "cohen_kappa": 1.0,
+        "matthews_corr": 1.0,
+        "g_mean": 1.0,
+        "roc_auc": 1.0
+    },
+    "parameters": {
+        "ccp_alpha": 0.0,
+        "class_weight": null,
+        "criterion": "gini",
+        "max_depth": 8,
+        "max_features": null,
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "random_state": 42,
+        "splitter": "best"
+    },
+    "notes": "Railway delay prediction model - Decision Tree",
+    "file_size_mb": 0.0025720596313476562
+}

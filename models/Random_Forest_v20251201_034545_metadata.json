@@ -1,0 +1,41 @@
+{
+    "version": "v20251201_034545",
+    "timestamp": "2025-12-01T03:45:45.432421",
+    "model_name": "Random_Forest",
+    "model_type": "RandomForestClassifier",
+    "model_path": "../models\\Random_Forest_v20251201_034545.pkl",
+    "metrics": {
+        "accuracy": 0.99996,
+        "precision": 0.9998511240136966,
+        "recall": 1.0,
+        "f1_score": 0.999925556465421,
+        "balanced_accuracy": 0.9999726536862831,
+        "cohen_kappa": 0.9998982094040699,
+        "matthews_corr": 0.9998982145842054,
+        "g_mean": 0.9999726533123624,
+        "roc_auc": 1.0
+    },
+    "parameters": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "class_weight": null,
+        "criterion": "gini",
+        "max_depth": 8,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 30,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+    },
+    "notes": "Railway delay prediction model - Random Forest",
+    "file_size_mb": 0.33802127838134766
+}
