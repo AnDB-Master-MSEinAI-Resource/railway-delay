@@ -1,0 +1,36 @@
+# Railway Delay Analysis - Python Dependencies
+
+# Core Data Science
+pandas>=1.5.0
+numpy>=1.23.0
+scipy>=1.10.0
+
+# Machine Learning
+scikit-learn>=1.2.0
+imbalanced-learn>=0.10.0
+
+# Deep Learning
+tensorflow>=2.12.0
+keras>=2.12.0
+
+# Visualization
+matplotlib>=3.6.0
+seaborn>=0.12.0
+plotly>=5.13.0
+
+# Jupyter
+jupyter>=1.0.0
+ipykernel>=6.21.0
+ipywidgets>=8.0.0
+
+# Utilities
+tqdm>=4.64.0
+python-dateutil>=2.8.0
+
+# Optional: GPU Support
+# tensorflow-gpu>=2.12.0
+
+# Development
+black>=23.0.0
+flake8>=6.0.0
+pytest>=7.2.0
