@@ -3,3 +3,4 @@ train_data.csv
 test_data.csv
 dirty_train_data.csv
 merged_train_data.csv
+data/*
