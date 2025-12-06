@@ -1,6 +1,6 @@
 {
     "best_model": "Decision Tree",
-    "timestamp": "2025-12-01T03:33:04.245680",
+    "timestamp": "2025-12-06T20:53:10.287895",
     "metrics": {
         "model_name": "Decision Tree",
         "Accuracy": 1.0,
@@ -10,7 +10,7 @@
         "Balanced_Accuracy": 1.0,
         "Cohen_Kappa": 1.0,
         "MCC": 1.0,
-        "Training_Time": 0.1521
+        "Training_Time": 0.2337
     },
     "training_samples": 7450136,
     "test_samples": 1862535,

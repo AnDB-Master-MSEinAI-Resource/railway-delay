@@ -68,7 +68,7 @@
 <body>
     <div class="header">
         <h1>🚂 Railway Delay Prediction Model Report</h1>
-        <p class="timestamp">Generated: 2025-12-01 03:30:30</p>
+        <p class="timestamp">Generated: 2025-12-06 20:53:10</p>
     </div>
 
     <div class="section">
@@ -108,15 +108,15 @@
 
             <tr>
                 <td><strong>Logistic Regression</strong></td>
-                <td>0.9565</td>
-                <td>0.9901</td>
-                <td>0.8466</td>
-                <td>0.9128</td>
-                <td>0.9218</td>
-                <td>0.8840</td>
-                <td>0.8888</td>
-                <td>0.9187</td>
-                <td>0.9974</td>
+                <td>0.9576</td>
+                <td>0.9896</td>
+                <td>0.8512</td>
+                <td>0.9152</td>
+                <td>0.9240</td>
+                <td>0.8871</td>
+                <td>0.8916</td>
+                <td>0.9211</td>
+                <td>0.9976</td>
             </tr>
 
             <tr>
@@ -135,18 +135,109 @@
             <tr>
                 <td><strong>Random Forest</strong></td>
                 <td>1.0000</td>
-                <td>0.9999</td>
                 <td>1.0000</td>
-                <td>0.9999</td>
                 <td>1.0000</td>
-                <td>0.9999</td>
-                <td>0.9999</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
                 <td>1.0000</td>
                 <td>1.0000</td>
             </tr>
 
             <tr>
                 <td><strong>Gradient Boosting</strong></td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+            </tr>
+
+            <tr>
+                <td><strong>Extra Trees</strong></td>
+                <td>0.9548</td>
+                <td>0.9794</td>
+                <td>0.8496</td>
+                <td>0.9099</td>
+                <td>0.9215</td>
+                <td>0.8799</td>
+                <td>0.8838</td>
+                <td>0.9187</td>
+                <td>0.9951</td>
+            </tr>
+
+            <tr>
+                <td><strong>AdaBoost</strong></td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+            </tr>
+
+            <tr>
+                <td><strong>SVC (prob)</strong></td>
+                <td>0.8937</td>
+                <td>0.9578</td>
+                <td>0.6323</td>
+                <td>0.7617</td>
+                <td>0.8110</td>
+                <td>0.6970</td>
+                <td>0.7219</td>
+                <td>0.7911</td>
+                <td>0.9739</td>
+            </tr>
+
+            <tr>
+                <td><strong>XGBoost</strong></td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+            </tr>
+
+            <tr>
+                <td><strong>LightGBM</strong></td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+            </tr>
+
+            <tr>
+                <td><strong>Stacking Ensemble</strong></td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+                <td>1.0000</td>
+            </tr>
+
+            <tr>
+                <td><strong>Voting Ensemble</strong></td>
                 <td>1.0000</td>
                 <td>1.0000</td>
                 <td>1.0000</td>
@@ -165,10 +256,10 @@
         <h2>🔍 Key Insights</h2>
         <ul>
             <li><strong>Decision Tree</strong> achieved F1-Score of 1.0000 with 100.00% accuracy</li>
+            <li><strong>Random Forest</strong> achieved F1-Score of 1.0000 with 100.00% accuracy</li>
             <li><strong>Gradient Boosting</strong> achieved F1-Score of 1.0000 with 100.00% accuracy</li>
-            <li><strong>Random Forest</strong> achieved F1-Score of 0.9999 with 100.00% accuracy</li>
 
-            <li>Average F1-Score across all models: 0.9782</li>
+            <li>Average F1-Score across all models: 0.9624</li>
             <li>Best balanced accuracy: 1.0000</li>
             <li>Dataset contains 7,450,136 training samples across 49 features</li>
         </ul>
