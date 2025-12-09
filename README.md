@@ -46,6 +46,20 @@ pip install pandas numpy scikit-learn matplotlib seaborn tensorflow imbalanced-l
 3. Run cells sequentially from top to bottom
 4. Results will be saved in `results/` directory
 
+## 🧾 Daily Activity Reports
+
+- Run the report generator to create a per-day summary of experiments and metrics saved under `models/metrics_log.csv`:
+
+```powershell
+python reports/daily_report_generator.py
+```
+
+- The generator creates `reports/daily_activity_report.csv` and `reports/daily_activity_report.md` files.
+
+## 🧠 Memory-friendly Data Loading
+
+- If your machine has limited memory and reading `merged_train_data.csv` causes MemoryError, set `DOWNSAMPLE=True` in the notebook or use the smart loader included in `notebooks/regression_pipeline_rmse.ipynb` (function `smart_read_csv`) which will downcast dtypes and fallback to chunked read when necessary.
+
 ## 📊 Models Implemented
 
 ### Traditional Machine Learning

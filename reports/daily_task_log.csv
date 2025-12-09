@@ -1,0 +1,4 @@
+date,tasks,planned_hours,actual_hours
+# Example rows: fill these manually
+# 2025-12-07,"Fixed rolling groupby & PREV_DELAY; added helpers",2,3
+# 2025-12-08,"Created reports/daily_report_generator.py & notebook; added utils",3,2
