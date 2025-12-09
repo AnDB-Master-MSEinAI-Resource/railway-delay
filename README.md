@@ -46,6 +46,11 @@ pip install pandas numpy scikit-learn matplotlib seaborn tensorflow imbalanced-l
 3. Run cells sequentially from top to bottom
 4. Results will be saved in `results/` directory
 
+## 📄 Analytical Report
+
+- A consolidated analytical report summarizing data preparation, EDA, feature engineering, and model evaluation has been added to `reports/railway_delay_analysis_report.md`.
+
+
 ## 🧾 Daily Activity Reports
 
 - Run the report generator to create a per-day summary of experiments and metrics saved under `models/metrics_log.csv`:
