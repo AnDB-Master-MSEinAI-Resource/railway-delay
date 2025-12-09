@@ -1,3 +1,0 @@
-date,work_summary,hours_spent,estimated_hours,notes
-2025-12-09,"Added safe rolling and prev_delay helpers; created report",3,3,"Added compute_prev_delay and compute_rolling_features; added tests"
-2025-12-10,"Refactored rolling code; added fallback for route column",2,2,"Added chunk safe reading for memory"
