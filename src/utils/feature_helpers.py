@@ -69,30 +69,49 @@ def compute_rolling_features_safe(df_in, target_col='TARGET', schedule_col='SCHE
 
     df[schedule_col] = pd.to_datetime(df[schedule_col], errors='coerce')
 
-    if route_col_local is not None and route_col_local in df.columns:
-        df = df.sort_values([route_col_local, schedule_col])
-        tmp = df.set_index(schedule_col)
+    # Drop rows with NaT in schedule_col for rolling computation
+    valid_mask = df[schedule_col].notna()
+    df_valid = df[valid_mask].copy()
+    df_invalid = df[~valid_mask].copy()
+
+    if len(df_valid) == 0:
+        df['ROLLING_MEAN_DELAY_7D'] = df[target_col].median() if target_col in df.columns else np.nan
+        df['ROLLING_MEAN_DELAY_30D'] = df[target_col].median() if target_col in df.columns else np.nan
+        return df
+
+    if route_col_local is not None and route_col_local in df_valid.columns:
+        df_valid = df_valid.sort_values([route_col_local, schedule_col])
+        tmp = df_valid.set_index(schedule_col)
         tmp['ROLLING_MEAN_DELAY_7D'] = tmp.groupby(route_col_local)[target_col].transform(lambda x: x.rolling(w7).mean())
         tmp['ROLLING_MEAN_DELAY_30D'] = tmp.groupby(route_col_local)[target_col].transform(lambda x: x.rolling(w30).mean())
-        df['ROLLING_MEAN_DELAY_7D'] = tmp['ROLLING_MEAN_DELAY_7D'].values
-        df['ROLLING_MEAN_DELAY_30D'] = tmp['ROLLING_MEAN_DELAY_30D'].values
+        df_valid['ROLLING_MEAN_DELAY_7D'] = tmp['ROLLING_MEAN_DELAY_7D'].values
+        df_valid['ROLLING_MEAN_DELAY_30D'] = tmp['ROLLING_MEAN_DELAY_30D'].values
     else:
-        df = df.sort_values(schedule_col)
-        idxed = df.set_index(schedule_col)
+        df_valid = df_valid.sort_values(schedule_col)
+        idxed = df_valid.set_index(schedule_col)
         idxed['ROLLING_MEAN_DELAY_7D'] = idxed[target_col].rolling(w7).mean()
         idxed['ROLLING_MEAN_DELAY_30D'] = idxed[target_col].rolling(w30).mean()
-        df['ROLLING_MEAN_DELAY_7D'] = idxed['ROLLING_MEAN_DELAY_7D'].values
-        df['ROLLING_MEAN_DELAY_30D'] = idxed['ROLLING_MEAN_DELAY_30D'].values
+        df_valid['ROLLING_MEAN_DELAY_7D'] = idxed['ROLLING_MEAN_DELAY_7D'].values
+        df_valid['ROLLING_MEAN_DELAY_30D'] = idxed['ROLLING_MEAN_DELAY_30D'].values
 
+    # Fill NaN values in valid data
     try:
-        if route_col_local is not None and route_col_local in df.columns:
-            df['ROLLING_MEAN_DELAY_7D'] = df['ROLLING_MEAN_DELAY_7D'].fillna(df.groupby(route_col_local)[target_col].transform('median'))
-            df['ROLLING_MEAN_DELAY_30D'] = df['ROLLING_MEAN_DELAY_30D'].fillna(df.groupby(route_col_local)[target_col].transform('median'))
+        if route_col_local is not None and route_col_local in df_valid.columns:
+            df_valid['ROLLING_MEAN_DELAY_7D'] = df_valid['ROLLING_MEAN_DELAY_7D'].fillna(df_valid.groupby(route_col_local)[target_col].transform('median'))
+            df_valid['ROLLING_MEAN_DELAY_30D'] = df_valid['ROLLING_MEAN_DELAY_30D'].fillna(df_valid.groupby(route_col_local)[target_col].transform('median'))
         else:
-            df['ROLLING_MEAN_DELAY_7D'] = df['ROLLING_MEAN_DELAY_7D'].fillna(df[target_col].median() if target_col in df.columns else np.nan)
-            df['ROLLING_MEAN_DELAY_30D'] = df['ROLLING_MEAN_DELAY_30D'].fillna(df[target_col].median() if target_col in df.columns else np.nan)
+            df_valid['ROLLING_MEAN_DELAY_7D'] = df_valid['ROLLING_MEAN_DELAY_7D'].fillna(df_valid[target_col].median() if target_col in df_valid.columns else np.nan)
+            df_valid['ROLLING_MEAN_DELAY_30D'] = df_valid['ROLLING_MEAN_DELAY_30D'].fillna(df_valid[target_col].median() if target_col in df_valid.columns else np.nan)
     except Exception:
-        df['ROLLING_MEAN_DELAY_7D'] = df['ROLLING_MEAN_DELAY_7D'].fillna(df[target_col].median() if target_col in df.columns else np.nan)
-        df['ROLLING_MEAN_DELAY_30D'] = df['ROLLING_MEAN_DELAY_30D'].fillna(df[target_col].median() if target_col in df.columns else np.nan)
+        df_valid['ROLLING_MEAN_DELAY_7D'] = df_valid['ROLLING_MEAN_DELAY_7D'].fillna(df_valid[target_col].median() if target_col in df_valid.columns else np.nan)
+        df_valid['ROLLING_MEAN_DELAY_30D'] = df_valid['ROLLING_MEAN_DELAY_30D'].fillna(df_valid[target_col].median() if target_col in df_valid.columns else np.nan)
 
-    return df
+    # For invalid rows, fill with median
+    median_7d = df_valid[target_col].median() if target_col in df_valid.columns else np.nan
+    median_30d = df_valid[target_col].median() if target_col in df_valid.columns else np.nan
+    df_invalid['ROLLING_MEAN_DELAY_7D'] = median_7d
+    df_invalid['ROLLING_MEAN_DELAY_30D'] = median_30d
+
+    # Combine back
+    df_combined = pd.concat([df_valid, df_invalid], ignore_index=True)
+    return df_combined

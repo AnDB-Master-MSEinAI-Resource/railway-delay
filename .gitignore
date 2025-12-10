@@ -6,3 +6,5 @@ merged_train_data.csv
 data/*
 models/*.pkl
 models/*.json
+miniconda/*
+
