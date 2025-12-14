@@ -1,0 +1,7 @@
+{
+  "date": "2025-12-14T10:15:05.882823",
+  "random_state": 42,
+  "winsor_cap": 18600.0,
+  "dowsample": true,
+  "best_model": "xgboost_tuned"
+}
