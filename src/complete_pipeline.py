@@ -81,7 +81,7 @@ class RailwayDelayPipeline:
         """Load railway delay dataset"""
         print(f"Loading data from: {filepath}")
         self.data = pd.read_csv(filepath)
-        print(f"✓ Data loaded: {self.data.shape[0]:,} rows × {self.data.shape[1]} columns")
+        print(f"[OK] Data loaded: {self.data.shape[0]:,} rows × {self.data.shape[1]} columns")
         return self.data
     
     # ========================================================================
@@ -178,7 +178,7 @@ class RailwayDelayPipeline:
         datetime_cols = [col for col in datetime_cols if 'date' in col.lower() or 'time' in col.lower()]
         
         if datetime_cols:
-            print(f"\n✓ Converting {len(datetime_cols)} datetime columns...")
+            print(f"\n[OK] Converting {len(datetime_cols)} datetime columns...")
             for col in datetime_cols:
                 try:
                     df[col] = pd.to_datetime(df[col], errors='coerce')
@@ -186,7 +186,7 @@ class RailwayDelayPipeline:
                     pass
         
         # 3.2 Create target variables
-        print(f"\n✓ Creating target variables...")
+        print(f"\n[OK] Creating target variables...")
         print(f"   - Regression target: {target_col}")
         print(f"   - Classification target: IS_DELAYED (threshold={delay_threshold} minutes)")
         
@@ -200,11 +200,38 @@ class RailwayDelayPipeline:
             else:
                 raise ValueError(f"Cannot find target column. Available columns: {list(df.columns)}")
         
+        # Ensure target is numeric so comparisons work even if the source column is read as string
+        if not pd.api.types.is_numeric_dtype(df[target_col]) or df[target_col].dtype == object:
+            # Try to parse time-like strings first (e.g., "00:05" -> minutes)
+            parsed_time = pd.to_timedelta(df[target_col], errors='coerce')
+            if parsed_time.notna().sum() > 0:
+                df[target_col] = parsed_time.dt.total_seconds() / 60
+                print(f"   Converted {target_col} from time-like strings to minutes")
+            else:
+                # Try to extract numeric substrings (handles values like '5 min', '5minutes', '5.0')
+                extracted = df[target_col].astype(str).str.extract(r'([-+]?\d*\.?\d+)')[0]
+                df[target_col] = pd.to_numeric(extracted, errors='coerce')
+                coerced = df[target_col].isna().sum() - (self.data[target_col].isna().sum() if target_col in self.data else 0)
+                if coerced > 0:
+                    print(f"   Warning: {coerced} non-numeric {target_col} values converted to NaN")
+
+        # Final coercion
+        df[target_col] = pd.to_numeric(df[target_col], errors='coerce')
+
+        # Drop rows with missing/invalid target (cannot supervise without a target)
+        n_missing = int(df[target_col].isna().sum())
+        if n_missing > 0:
+            print(f"   Warning: {n_missing} rows have missing or non-numeric '{target_col}' and will be dropped")
+            df = df[df[target_col].notna()].reset_index(drop=True)
+
+        if df[target_col].isna().all():
+            raise ValueError(f"Target column '{target_col}' could not be converted to numeric values.")
+
         # Create classification target
         df['IS_DELAYED'] = (df[target_col] > delay_threshold).astype(int)
         
         # 3.3 Handle missing values
-        print(f"\n✓ Handling missing values...")
+        print(f"\n[OK] Handling missing values...")
         
         # Separate numeric and categorical columns
         numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
@@ -224,18 +251,18 @@ class RailwayDelayPipeline:
                 df[col].fillna('Unknown', inplace=True)
         
         # 3.4 Feature engineering
-        print(f"\n✓ Engineering features...")
+        print(f"\n[OK] Engineering features...")
         df = self._engineer_features(df)
         
         # 3.5 Handle outliers (winsorization)
-        print(f"\n✓ Handling outliers (95th percentile clipping)...")
+        print(f"\n[OK] Handling outliers (95th percentile clipping)...")
         for col in numeric_cols:
             if col in df.columns:
                 upper_limit = df[col].quantile(0.95)
                 lower_limit = df[col].quantile(0.05)
                 df[col] = df[col].clip(lower_limit, upper_limit)
         
-        print(f"\n✓ Preprocessing complete!")
+        print(f"\n[OK] Preprocessing complete!")
         print(f"   Final shape: {df.shape}")
         
         self.data = df
@@ -302,7 +329,7 @@ class RailwayDelayPipeline:
         # Sort by date if available
         if date_col and date_col in df.columns:
             df = df.sort_values(date_col).reset_index(drop=True)
-            print(f"✓ Data sorted by {date_col}")
+            print(f"[OK] Data sorted by {date_col}")
         
         # Define features and targets
         exclude_cols = [target_col, 'IS_DELAYED']
@@ -330,7 +357,7 @@ class RailwayDelayPipeline:
         
         self.feature_names = X.columns.tolist()
         
-        print(f"\n✓ Split complete:")
+        print(f"\n[OK] Split complete:")
         print(f"   Train set: {len(self.X_train):,} samples")
         print(f"   Test set:  {len(self.X_test):,} samples")
         print(f"   Features:  {len(self.feature_names)}")
@@ -452,7 +479,7 @@ class RailwayDelayPipeline:
             }
             print(f"   RMSE: {self.results['LightGBM_Reg']['rmse']:.4f} | MAE: {self.results['LightGBM_Reg']['mae']:.4f}")
         
-        print("\n✓ Regression models trained successfully!")
+        print("\n[OK] Regression models trained successfully!")
         
     # ========================================================================
     # 6. MODEL TRAINING - CLASSIFICATION
@@ -571,7 +598,7 @@ class RailwayDelayPipeline:
             }
             print(f"   PR-AUC: {pr_auc:.4f} | F2: {self.results['XGBoost_Clf']['f2_score']:.4f}")
         
-        print("\n✓ Classification models trained successfully!")
+        print("\n[OK] Classification models trained successfully!")
     
     # ========================================================================
     # 7. MODEL COMPARISON
@@ -660,13 +687,13 @@ class RailwayDelayPipeline:
         }
         
         joblib.dump(pipeline_data, filepath)
-        print(f"✓ Pipeline saved to: {filepath}")
+        print(f"[OK] Pipeline saved to: {filepath}")
     
     def load_pipeline(self, filepath: str):
         """Load saved pipeline"""
         
         pipeline_data = joblib.load(filepath)
-        print(f"✓ Pipeline loaded from: {filepath}")
+        print(f"[OK] Pipeline loaded from: {filepath}")
         return pipeline_data
 
 
