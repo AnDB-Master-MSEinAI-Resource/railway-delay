@@ -6,3 +6,15 @@ merged_train_data.csv
 data/*
 models/*.pkl
 models/*.json
+miniconda/*
+notebooks/models/*.pkl
+notebooks/models/*.joblib
+notebooks/models/*.h5
+notebooks/models/*_metadata.json
+notebooks/models/dnn_*.png
+notebooks/models/optuna_*.png
+notebooks/models/final_*.png
+notebooks/models/stacking_*.pkl
+notebooks/models/voting_*.pkl
+notebooks/models/xgboost_*.joblib
+
