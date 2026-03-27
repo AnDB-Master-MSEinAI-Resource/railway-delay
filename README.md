@@ -1,181 +1,112 @@
-# Railway Delay Analysis - Data Mining Project
+# Railway Delay Analysis
 
-## 📋 Project Overview
-Comprehensive data mining and machine learning analysis for predicting railway delays using advanced techniques including traditional ML, deep learning, hyperparameter tuning, and clustering.
+A data mining project for railway delay prediction using classical machine learning, gradient boosting, and deep learning approaches.
 
-## 🗂️ Project Structure
-```
+## What this repository contains
+
+This repository is organized around two main analysis notebooks plus supporting artifacts:
+
+- `notebooks/25MSA23234_DuongBinhAn_Fall25.ipynb`: main end-to-end experimentation notebook (EDA, feature engineering, training, comparison, export).
+- `notebooks/regression_pipeline_rmse.ipynb`: regression-focused pipeline and evaluation flow.
+- `src/utils/feature_helpers.py`: reusable helper functions for lag and rolling delay features.
+- `reports/railway_delay_analysis_report.md`: written summary report.
+
+## Clean project structure
+
+```text
 railway-delay/
-│
-├── data/                      # Data directory
-│   ├── raw/                   # Original, immutable data
-│   ├── interim/               # Intermediate data (dirty, experimental)
-│   └── processed/             # Final processed data ready for modeling
-│
-├── notebooks/                 # Jupyter/IPython notebooks
-│   └── railway_delay_analysis.ipynb
-│
-├── src/                       # Source code for use in this project
-│   ├── data/                  # Scripts to download or generate data
-│   ├── features/              # Scripts for feature engineering
-│   ├── models/                # Scripts to train models
-│   └── visualization/         # Scripts to create visualizations
-│
-├── models/                    # Trained and serialized models
-│
-├── results/                   # Analysis results
-│   ├── figures/               # Generated graphics and figures
-│   └── metrics/               # Model performance metrics
-│
-├── docs/                      # Documentation
-│
-├── .gitignore                 # Git ignore file
-└── README.md                  # This file
+|-- README.md
+|-- .gitignore
+|-- docs/
+|   |-- README.md
+|-- reports/
+|   |-- railway_delay_analysis_report.md
+|-- src/
+|   |-- README.md
+|   |-- utils/
+|       |-- feature_helpers.py
+|-- notebooks/
+|   |-- 25MSA23234_DuongBinhAn_Fall25.ipynb
+|   |-- regression_pipeline_clean.ipynb
+|   |-- regression_pipeline_rmse.ipynb
+|   |-- figures/
+|   |-- models/
+|   |-- catboost_info/
+|-- models/
+|-- .venv/ (local environment, not tracked)
+|-- miniconda/ (local environment, not tracked)
 ```
 
-## 🚀 Getting Started
+## Environment setup
 
-### Prerequisites
-```bash
-pip install pandas numpy scikit-learn matplotlib seaborn tensorflow imbalanced-learn
-```
+### 1. Python version
 
-### Running the Analysis
-1. Open `notebooks/railway_delay_analysis.ipynb`
-2. Update file paths in the notebook if needed
-3. Run cells sequentially from top to bottom
-4. Results will be saved in `results/` directory
+Recommended: Python 3.10+ (project also has local environments under `.venv` and `miniconda`).
 
-## 📄 Analytical Report
+### 2. Install dependencies
 
-- A consolidated analytical report summarizing data preparation, EDA, feature engineering, and model evaluation has been added to `reports/railway_delay_analysis_report.md`.
-
-
-## 🧾 Daily Activity Reports
-
-- Run the report generator to create a per-day summary of experiments and metrics saved under `models/metrics_log.csv`:
+If you use an existing local environment:
 
 ```powershell
-python reports/daily_report_generator.py
+.\.venv\Scripts\Activate.ps1
+pip install pandas numpy scikit-learn matplotlib seaborn xgboost lightgbm catboost shap tensorflow joblib jupyter
 ```
 
-- The generator creates `reports/daily_activity_report.csv` and `reports/daily_activity_report.md` files.
+If you prefer Conda:
 
-## 🧠 Memory-friendly Data Loading
+```powershell
+conda activate <your-env>
+pip install pandas numpy scikit-learn matplotlib seaborn xgboost lightgbm catboost shap tensorflow joblib jupyter
+```
 
-- If your machine has limited memory and reading `merged_train_data.csv` causes MemoryError, set `DOWNSAMPLE=True` in the notebook or use the smart loader included in `notebooks/regression_pipeline_rmse.ipynb` (function `smart_read_csv`) which will downcast dtypes and fallback to chunked read when necessary.
+## How to run
 
-## 📊 Models Implemented
+### Run notebooks
 
-### Traditional Machine Learning
-- Logistic Regression
-- Decision Tree
-- Random Forest
-- Gradient Boosting
-- K-Nearest Neighbors
-- Naive Bayes
+```powershell
+jupyter notebook
+```
 
-### Deep Learning
-- Multi-layer Neural Network
-- Dropout regularization
-- Batch Normalization
-- Early stopping
+Then execute either:
 
-### Optimization Techniques
-- Grid Search hyperparameter tuning
-- Stratified K-Fold cross-validation
-- Feature importance analysis
+1. `notebooks/25MSA23234_DuongBinhAn_Fall25.ipynb` for full training/benchmarking workflow.
+2. `notebooks/regression_pipeline_rmse.ipynb` for regression RMSE-focused workflow.
 
-### Clustering
-- K-Means clustering
-- DBSCAN
-- PCA dimensionality reduction
+### Notebook output locations
 
-## 📈 Key Features
+- Models: `notebooks/models/`
+- Figures: `notebooks/figures/`
+- Training logs (CatBoost): `notebooks/catboost_info/`
 
-### Data Processing
-- Missing value imputation
-- Outlier detection and handling
-- Feature engineering
-- Data scaling and normalization
-- Categorical encoding
+## Core workflow summary
 
-### Evaluation Metrics
-- **Standard**: Accuracy, Precision, Recall, F1-Score
-- **Advanced**: Balanced Accuracy, Cohen's Kappa, MCC, G-Mean, ROC-AUC
-- **Clustering**: Silhouette Score, Davies-Bouldin Score
+1. Data loading and preprocessing.
+2. Feature engineering (including lag/rolling features in `src/utils/feature_helpers.py`).
+3. Train multiple model families.
+4. Tune and compare model performance.
+5. Export best models and supporting artifacts.
+6. Generate diagnostic plots and metrics summaries.
 
-### Visualizations
-All visualizations are saved in `results/figures/`:
-- Confusion matrices
-- ROC curves
-- Feature importance plots
-- Training history curves
-- Clustering visualizations
-- Model comparison charts
+## Important notes
 
-## 📁 Data Files
+- Large datasets are intentionally ignored from Git and should live under `data/` locally.
+- Generated models/plots can be large; keep only final artifacts you need.
+- `__pycache__`, temporary notebook backups, and one-off fix scripts were removed during cleanup.
+- `.gitignore` has been tightened to prevent committing environment/cache noise.
 
-### Raw Data (`data/raw/`)
-- `railway-delay-dataset.csv`: Original dataset (5.8M records)
+## Reproducibility checklist
 
-### Processed Data (`data/processed/`)
-- `train_data.csv`: Training dataset (80% split)
-- `test_data.csv`: Test dataset (20% split)
-- `merged_train_data.csv`: Combined clean and dirty training data
+- Use a clean environment.
+- Keep raw and processed data paths consistent.
+- Execute notebook cells from top to bottom.
+- Re-run full training if models in `notebooks/models/` are deleted.
 
-### Interim Data (`data/interim/`)
-- `dirty_train_data.csv`: Data with intentionally injected errors for data quality analysis
+## Documentation
 
-## 🎯 Results Summary
+- Main analysis report: `reports/railway_delay_analysis_report.md`
+- Additional data notes: `docs/README.md`
+- Source code guidance: `src/README.md`
 
-Results are stored in `results/`:
-- **figures/**: All generated plots and visualizations
-- **metrics/**: Model performance metrics (to be generated)
+## Author
 
-## 📚 Documentation
-
-See `docs/` directory for:
-- Data schema documentation
-- Model architecture details
-- Analysis methodology
-- Project reports
-
-## 🔬 Methodology
-
-1. **Data Exploration**: Comprehensive EDA with statistical analysis
-2. **Data Preprocessing**: Cleaning, transformation, feature engineering
-3. **Model Training**: Multiple algorithms with proper validation
-4. **Hyperparameter Tuning**: Systematic optimization
-5. **Model Evaluation**: Comprehensive metrics and comparisons
-6. **Clustering Analysis**: Pattern discovery
-7. **Insights Generation**: Business-focused recommendations
-
-## 🛠️ Technologies Used
-
-- **Python 3.x**
-- **Pandas & NumPy**: Data manipulation
-- **Scikit-learn**: Machine learning algorithms
-- **TensorFlow/Keras**: Deep learning
-- **Matplotlib & Seaborn**: Visualization
-- **Jupyter Notebook**: Interactive analysis
-
-## 📝 Notes
-
-- Large datasets are sampled for efficient training (adjustable in notebook)
-- GPU acceleration supported for deep learning models
-- All random seeds are set for reproducibility (random_state=42)
-
-## 👥 Author
-**Data Mining Project**  
-MSE Program - Master of Software Engineering
-
-## 📄 License
-Educational Project - Academic Use
-
-## 🤝 Contributing
-This is an educational project. For suggestions or improvements, please contact the project author.
-
----
-
-**Last Updated**: November 2025
+MSE Data Mining Project (Academic)
